@@ -1,0 +1,103 @@
+/*Budget Tracker*/
+.budget-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  max-height: 600px;
+  border-radius: var(--border-radius);
+  padding: 0; /* Remove padding to separate header from content */
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: var(--spacing-md);
+  height: 600px; /* Fixed height for proper sticky behavior */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Main budget card header (the one with "Budget Tracker" title) */
+.budget-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(15px);
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  flex-shrink: 0;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+/* Content area that scrolls */
+.budget-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  height: 100%;
+}
+
+/* Individual budget item headers (renamed to avoid conflict) */
+.budget-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Ensure budget list has proper spacing */
+.budget-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Budget item styling */
+.budget-item {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: var(--transition);
+}
+
+.budget-item:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Budget Progress */
+.budget-item {
+  margin-bottom: var(--spacing-sm);
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-sm);
+}
+
+.progress-fill {
+  height: 100%;
+  transition: var(--transition);
+  border-radius: 4px;
+}
+
+.progress-success {
+  background: var(--success-color);
+}
+.progress-warning {
+  background: var(--warning-color);
+}
+.progress-danger {
+  background: var(--error-color);
+}

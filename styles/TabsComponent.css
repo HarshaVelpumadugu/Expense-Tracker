@@ -1,0 +1,18 @@
+/* Tabs Component */
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  /* max-height: 600px; */
+  max-height: none;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* margin-bottom: var(--spacing-md); */
+  height: auto;
+  /* overflow: auto; */
+}
+.tab-btn.active {
+  background: var(--primary-color);
+}

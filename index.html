@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Finance Dashboard</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/Header.css" />
+    <link rel="stylesheet" href="styles/DashboardStats.css" />
+    <link rel="stylesheet" href="styles/GridLayout.css" />
+    <link rel="stylesheet" href="styles/FormStyles.css" />
+    <link rel="stylesheet" href="styles/ExpensesTable.css" />
+    <link rel="stylesheet" href="styles/BudgetModal.css" />
+    <link rel="stylesheet" href="styles/BudgetTracker.css" />
+    <link rel="stylesheet" href="styles/ButtonStyles.css" />
+    <link rel="stylesheet" href="styles/TabsComponent.css" />
+    <link rel="stylesheet" href="styles/ToastAndLoading.css" />
+    <link rel="stylesheet" href="styles/chart.css" />
+    <link rel="stylesheet" href="styles/ExpenseModal.css" />
+    <link rel="stylesheet" href="styles/ResponsiveDesign.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="main-header">
+          <h1><i class="fas fa-chart-line"></i> Personal Finance Dashboard</h1>
+          <button class="add-expense-btn">Add Expense</button>
+        </div>
+        <p>
+          Track your expenses, manage your budget, and achieve your financial
+          goals
+        </p>
+      </header>
+
+      <!-- Dashboard Statistics -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-rupee-sign"></i></div>
+          <div class="value" id="totalExpenses">₹0</div>
+          <div class="label">Total Expenses</div>
+        </div>
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-calendar-day"></i></div>
+          <div class="value" id="avgDaily">₹0</div>
+          <div class="label">Avg Daily</div>
+        </div>
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-crown"></i></div>
+          <div class="value" id="topCategory">-</div>
+          <div class="label">Top Category</div>
+        </div>
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-credit-card"></i></div>
+          <div class="value" id="paymentRatio">-</div>
+          <div class="label">Cash vs Card</div>
+        </div>
+        <div class="stat-card">
+          <div class="icon"><i class="fas fa-list"></i></div>
+          <div class="value" id="expenseCount">0</div>
+          <div class="label">Expenses</div>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-2">
+        <!-- Add Expense Form -->
+        <div>
+          <!-- Filters -->
+          <div class="card mb-3 expenses-tab-container">
+            <div class="filters">
+              <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input
+                  type="text"
+                  id="searchInput"
+                  class="search-input"
+                  placeholder="Search expenses..."
+                />
+              </div>
+
+              <div class="filter-group">
+                <label>Category</label>
+                <select id="categoryFilter" class="form-input">
+                  <option value="">All Categories</option>
+                  <option value="food">Food</option>
+                  <option value="transport">Transport</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="shopping">Shopping</option>
+                  <option value="bills">Bills</option>
+                  <option value="others">Others</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label>Payment Method</label>
+                <select id="paymentFilter" class="form-input">
+                  <option value="">All Methods</option>
+                  <option value="cash">Cash</option>
+                  <option value="card">Card</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label>From Date</label>
+                <input type="date" id="fromDate" class="form-input" />
+              </div>
+
+              <div class="filter-group">
+                <label>To Date</label>
+                <input type="date" id="toDate" class="form-input" />
+              </div>
+
+              <div class="filter-group">
+                <label>&nbsp;</label>
+                <button class="btn btn-secondary" onclick="clearFilters()">
+                  <i class="fas fa-times"></i> Clear Filters
+                </button>
+              </div>
+            </div>
+            <div class="flex gap-3 items-center mb-3 tab-header">
+              <button
+                class="btn btn-secondary tab-btn active exp-btn"
+                data-tab="expenses-tab"
+              >
+                Expenses
+              </button>
+              <button
+                class="btn btn-secondary tab-btn budget-btn"
+                data-tab="budget-tab"
+              >
+                Budget Tracker
+              </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="tab-content" id="expenses-tab">
+              <!-- ⬇️ Your existing Expense Table goes here -->
+              <!-- Expense Table -->
+              <div class="card">
+                <h2 class="mb-3">
+                  <i class="fas fa-table"></i> Expense History
+                </h2>
+                <div class="table-container">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th onclick="sortTable('date')">
+                          Date <i class="fas fa-sort"></i>
+                        </th>
+                        <th onclick="sortTable('description')">
+                          Description <i class="fas fa-sort"></i>
+                        </th>
+                        <th onclick="sortTable('category')">
+                          Category <i class="fas fa-sort"></i>
+                        </th>
+                        <th onclick="sortTable('amount')">
+                          Amount <i class="fas fa-sort"></i>
+                        </th>
+                        <th onclick="sortTable('paymentMethod')">
+                          Payment <i class="fas fa-sort"></i>
+                        </th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="expenseTableBody">
+                      <!-- Expenses will be loaded here -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="pagination" id="pagination">
+                  <!-- Pagination will be loaded here -->
+                </div>
+              </div>
+            </div>
+            <div class="tab-content hidden" id="budget-tab">
+              <!-- ⬇️ Your existing Budget Tracker Table goes here -->
+              <div class="budget-card">
+                <div class="budget-header">
+                  <h2><i class="fas fa-target"></i> Budget Tracker</h2>
+                  <button class="btn btn-secondary" onclick="openBudgetModal()">
+                    <i class="fas fa-cog"></i> Setup Budget
+                  </button>
+                </div>
+
+                <div class="budget-content">
+                  <div id="budgetContainer">
+                    <div class="empty-state">
+                      <div class="icon"><i class="fas fa-bullseye"></i></div>
+                      <h3>No Budgets Set</h3>
+                      <p>
+                        Set up your monthly budget to track your spending goals
+                      </p>
+                      <button
+                        class="btn btn-primary"
+                        onclick="openBudgetModal()"
+                      >
+                        <i class="fas fa-plus"></i> Setup Budget
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Category Chart -->
+        <div class="category-card">
+          <h2 class="mb-3">
+            <i class="fas fa-chart-pie"></i> Category Distribution
+          </h2>
+          <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Expense Modal-->
+    <div class="expense-overlay hidden" id="expenseOverlay">
+      <div class="expense-card" id="expenseCard">
+        <button id="closeExpenseFormBtn" class="close-btn" aria-label="Close">
+          &times;
+        </button>
+        <h2 class="mb-3"><i class="fas fa-plus-circle"></i> Add Expense</h2>
+        <form id="expenseForm">
+          <div class="form-group">
+            <label for="amount" class="form-label">Amount *</label>
+            <input
+              type="number"
+              id="amount"
+              class="form-input"
+              step="0.01"
+              min="0.01"
+              max="999999"
+              required
+            />
+            <div class="error-message" id="amountError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="category" class="form-label">Category *</label>
+            <select id="category" class="form-input" required>
+              <option value="">Select Category</option>
+              <option value="food">🍕 Food</option>
+              <option value="transport">🚗 Transport</option>
+              <option value="entertainment">🎬 Entertainment</option>
+              <option value="shopping">🛍️ Shopping</option>
+              <option value="bills">💡 Bills</option>
+              <option value="others">📋 Others</option>
+            </select>
+            <div class="error-message" id="categoryError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="date" class="form-label">Date *</label>
+            <input type="date" id="date" class="form-input" required />
+            <div class="error-message" id="dateError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="form-label">Description *</label>
+            <input
+              type="text"
+              id="description"
+              class="form-input"
+              maxlength="100"
+              required
+            />
+            <div class="error-message" id="descriptionError"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Payment Method *</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cash"
+                  required
+                />
+                <span><i class="fas fa-money-bill-wave"></i> Cash</span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="card"
+                  required
+                />
+                <span><i class="fas fa-credit-card"></i> Card</span>
+              </label>
+            </div>
+            <div class="error-message" id="paymentMethodError"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full">
+            <i class="fas fa-plus"></i>
+            <span>Add Expense</span>
+            <div class="loading hidden"></div>
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- Budget Modal -->
+    <div id="budgetModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeBudgetModal()">
+          &times;
+        </button>
+        <h2 class="mb-3"><i class="fas fa-target"></i> Setup Monthly Budget</h2>
+        <form id="budgetForm">
+          <div class="form-group">
+            <label for="budgetCategory" class="form-label">Category</label>
+            <select id="budgetCategory" class="form-input" required>
+              <option value="food">🍕 Food</option>
+              <option value="transport">🚗 Transport</option>
+              <option value="entertainment">🎬 Entertainment</option>
+              <option value="shopping">🛍️ Shopping</option>
+              <option value="bills">💡 Bills</option>
+              <option value="others">📋 Others</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="budgetAmount" class="form-label">Budget Amount</label>
+            <input
+              type="number"
+              id="budgetAmount"
+              class="form-input"
+              step="0.01"
+              min="1"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full">
+            <i class="fas fa-save"></i> Save Budget
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+/* Chart Container */
+.category-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: var(--spacing-md);
+  height: auto;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+.chart-container {
+  position: relative;
+  height: 400px;
+  margin: var(--spacing-lg) 0;
+}
+/* Category Badges */
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.category-food {
+  background: rgba(255, 107, 107, 0.1);
+  color: #e53e3e;
+}
+.category-transport {
+  background: rgba(56, 178, 172, 0.1);
+  color: #319795;
+}
+.category-entertainment {
+  background: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+}
+.category-shopping {
+  background: rgba(255, 193, 7, 0.1);
+  color: #f57c00;
+}
+.category-bills {
+  background: rgba(33, 150, 243, 0.1);
+  color: #1976d2;
+}
+.category-others {
+  background: rgba(158, 158, 158, 0.1);
+  color: #616161;
+}
