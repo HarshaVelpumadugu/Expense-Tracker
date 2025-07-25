@@ -198,10 +198,10 @@
   }
 
   /* Hide less important table columns on very small screens */
-  .table th:nth-child(5),
+  /* .table th:nth-child(5),
   .table td:nth-child(5) {
     display: none;
-  }
+  } */
 
   /* Compact category badges */
   .category-badge {
